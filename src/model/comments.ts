@@ -1,4 +1,4 @@
-import {Column, Entity, PrimaryGeneratedColumn} from "typeorm";
+import {Column, Entity, PrimaryGeneratedColumn,ManyToOne} from "typeorm";
 
 @Entity()
 export class Comments {
@@ -12,5 +12,4 @@ export class Comments {
     content: string;
     @Column()
     time: string;
-
 }
