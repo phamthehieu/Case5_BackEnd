@@ -16,4 +16,5 @@ export class Posts {
     role: string;
     @Column()
     time: string
+
 }
