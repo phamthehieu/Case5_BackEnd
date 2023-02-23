@@ -1,13 +1,41 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const data_source_1 = require("../data-source");
+const data_soure_1 = require("../data-soure");
 const posts_1 = require("../model/posts");
 class PostService {
     constructor() {
         this.getAll = async () => {
-            let sql = 'select p.id, p.content, p.image, u.username, c.name as nameCategory from blog_category bc join blog b on bc.idBlog = b.id join category c on bc.idCategory = c.id join user u on b.user = u.id';
+            let sql = 'select p.content,p.image,p.role,p.time, u.userName from users u join posts p on u.idUser = p.idUser';
+            let posts = await this.postRepository.query(sql);
+            return posts;
         };
-        this.postRepository = data_source_1.AppDataSource.postRepository(posts_1.Posts);
+        this.save = async (post) => {
+            console.log(post);
+            return this.postRepository.save(post);
+        };
+        this.update = async (id, newPost) => {
+            let post = await this.postRepository.findOneBy({ idPost: id });
+            if (!post) {
+                return null;
+            }
+            return this.postRepository.update({ idPost: id }, newPost);
+        };
+        this.findById = async (id) => {
+            let post = await this.postRepository.findOneBy({ idPost: id });
+            if (!post) {
+                return null;
+            }
+            return post;
+        };
+        this.remove = async (id) => {
+            let post = await this.postRepository.findOneBy({ idPost: id });
+            if (!post) {
+                return null;
+            }
+            return this.postRepository.delete({ idPost: id });
+        };
+        this.postRepository = data_soure_1.AppDataSource.getRepository(posts_1.Posts);
     }
 }
+exports.default = new PostService();
 //# sourceMappingURL=postService.js.map
