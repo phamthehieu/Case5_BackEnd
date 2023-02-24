@@ -28,7 +28,6 @@ class PostController {
         this.create = async (req, res) => {
             let a = req.body;
             let post = {
-                idPost: a.idPost,
                 content: a.content,
                 image: a.image,
                 idUser: a.idUser,
@@ -49,6 +48,11 @@ class PostController {
             let idPost = req.params.idPost;
             await this.postService.remove(idPost);
             res.status(200).json('Success!');
+        };
+        this.search = async (req, res) => {
+            let search = req.query.userName;
+            let blogs = await postService_1.default.findByName(search);
+            res.status(200).json(blogs);
         };
         this.postService = postService_1.default;
     }

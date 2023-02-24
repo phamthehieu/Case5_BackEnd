@@ -12,9 +12,9 @@ export class Posts {
     idUser: number;
     @Column()
     idFriend: number;
-    @Column()
+    @Column({default: 'public',
+        enum: ['public', 'private','friend']})
     role: string;
     @Column()
     time: string
-
 }

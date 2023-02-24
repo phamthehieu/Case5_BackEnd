@@ -8,12 +8,12 @@ class PostService {
     }
     getAll = async () => {
         let sql = 'select p.content,p.image,p.role,p.time, u.userName from users u join posts p on u.idUser = p.idUser'
-        let posts =await this.postRepository.query(sql)
+        let posts = await this.postRepository.query(sql)
+
         return posts
 
     }
     save = async(post) => {
-        console.log(post)
          return this.postRepository.save(post)
 
 
@@ -38,6 +38,15 @@ class PostService {
             return null;
         }
         return  this.postRepository.delete({idPost: id});
+    }
+    findByName = async (search)=> {
+
+        let sql =` select p.content,p.image,p.role,p.time, u.userName from users u join posts p on u.idUser = p.idUser where u.userName like '%${search}%'`
+        let post = await this.postRepository.query(sql);
+        if(!post){
+            return null;
+        }
+        return post;
     }
 
 

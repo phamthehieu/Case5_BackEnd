@@ -28,7 +28,6 @@ class PostController {
         let a = req.body;
 
         let post = {
-            idPost: a.idPost,
             content : a.content,
             image : a.image,
             idUser: a.idUser,
@@ -51,6 +50,11 @@ class PostController {
         await this.postService.remove(idPost);
         res.status(200).json('Success!')
 
+    }
+    search = async (req: Request, res: Response) => {
+        let search = req.query.userName;
+        let blogs = await postService.findByName(search);
+        res.status(200).json(blogs)
     }
 
 

@@ -12,4 +12,5 @@ exports.postRouter.post('/', postController_1.default.create);
 exports.postRouter.put('/:idPost', postController_1.default.update);
 exports.postRouter.delete('/:idPost', postController_1.default.remove);
 exports.postRouter.get('/findById/:idPost', postController_1.default.findById);
+exports.postRouter.get('/search/findByName', postController_1.default.search);
 //# sourceMappingURL=postRouter.js.map

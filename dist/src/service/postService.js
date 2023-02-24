@@ -10,7 +10,6 @@ class PostService {
             return posts;
         };
         this.save = async (post) => {
-            console.log(post);
             return this.postRepository.save(post);
         };
         this.update = async (id, newPost) => {
@@ -33,6 +32,14 @@ class PostService {
                 return null;
             }
             return this.postRepository.delete({ idPost: id });
+        };
+        this.findByName = async (search) => {
+            let sql = ` select p.content,p.image,p.role,p.time, u.userName from users u join posts p on u.idUser = p.idUser where u.userName like '%${search}%'`;
+            let post = await this.postRepository.query(sql);
+            if (!post) {
+                return null;
+            }
+            return post;
         };
         this.postRepository = data_soure_1.AppDataSource.getRepository(posts_1.Posts);
     }

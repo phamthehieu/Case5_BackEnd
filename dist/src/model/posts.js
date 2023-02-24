@@ -34,7 +34,8 @@ __decorate([
     __metadata("design:type", Number)
 ], Posts.prototype, "idFriend", void 0);
 __decorate([
-    (0, typeorm_1.Column)(),
+    (0, typeorm_1.Column)({ default: 'public',
+        enum: ['public', 'private', 'friend'] }),
     __metadata("design:type", String)
 ], Posts.prototype, "role", void 0);
 __decorate([
