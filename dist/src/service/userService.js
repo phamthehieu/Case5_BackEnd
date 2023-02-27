@@ -36,6 +36,15 @@ class UserService {
         this.changePassword = async (user, newPass) => {
             return await this.userRepository.update({ idUser: user.idUser }, { password: newPass });
         };
+        this.findUser = async (id) => {
+            let user = await this.userRepository.findOneBy({ idUser: id });
+            if (!user) {
+                return null;
+            }
+            else {
+                return user;
+            }
+        };
         this.userRepository = data_soure_1.AppDataSource.getRepository(users_1.Users);
     }
 }

@@ -3,7 +3,7 @@ declare class AuthController {
     private AuthService;
     constructor();
     login: (req: Request, res: Response) => Promise<void>;
-    register: (req: any, res: any) => Promise<void>;
+    register: (req: Request, res: Response) => Promise<void>;
 }
 declare const _default: AuthController;
 export default _default;

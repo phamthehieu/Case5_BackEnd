@@ -8,9 +8,9 @@ const express_1 = require("express");
 const userController_1 = __importDefault(require("../controller/userController"));
 const checkRole_1 = require("../middleware/checkRole");
 exports.userRouter = (0, express_1.Router)();
-exports.userRouter.get('/list-users', checkRole_1.checkRole, userController_1.default.showListUser);
-exports.userRouter.put('/edit/:id', userController_1.default.editUser);
+exports.userRouter.get('/', checkRole_1.checkRole, userController_1.default.showListUser);
+exports.userRouter.put('/:id', userController_1.default.editUser);
 exports.userRouter.put('/lock/:id', checkRole_1.checkRole, userController_1.default.lockUser);
-exports.userRouter.put('/password/id', userController_1.default.changePassword);
+exports.userRouter.put('/password/:id', userController_1.default.changePassword);
 exports.userRouter.get('/profile/:id', userController_1.default.showProfile);
 //# sourceMappingURL=userRouter.js.map

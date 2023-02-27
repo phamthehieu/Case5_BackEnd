@@ -37,7 +37,7 @@ class AuthService {
                                 status: userCheck.status
                             };
                             const token = jsonwebtoken_1.default.sign(payload, auth_1.SECRET, {
-                                expiresIn: 36000
+                                expiresIn: 3600000
                             });
                             const check = {
                                 token: token,

@@ -6,6 +6,7 @@ declare class UserService {
     getUser: (id: any) => Promise<any>;
     lock: (id: any) => Promise<any>;
     changePassword: (user: any, newPass: any) => Promise<any>;
+    findUser: (id: any) => Promise<any>;
 }
 declare const _default: UserService;
 export default _default;

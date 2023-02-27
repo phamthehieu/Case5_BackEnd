@@ -9,4 +9,4 @@ const comments_controller_1 = __importDefault(require("../controller/comments.co
 exports.commentRouter = (0, express_1.Router)();
 exports.commentRouter.post('/:idUser/:idPost', comments_controller_1.default.newComment);
 exports.commentRouter.delete('/:idComment', comments_controller_1.default.DeleteComment);
-//# sourceMappingURL=commentRouter.js.map
+//# sourceMappingURL=CommentRouter.js.map

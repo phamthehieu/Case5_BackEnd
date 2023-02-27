@@ -52,14 +52,14 @@ class UserController {
         this.changePassword = async (req, res) => {
             try {
                 let id = req.params.id;
-                let user = await this.UserService.findUser(id);
+                let user = await userService_1.default.findUser(id);
                 let passwordCompare = await bcrypt_1.default.compare(req.body.password, user.password);
                 if (!passwordCompare) {
-                    res.status(403).json({ message: 'wrong password' });
+                    res.status(200).json('wrong password');
                 }
                 else {
-                    let newPassword = await bcrypt_1.default.hash(req.body.passwordNew, 10);
-                    let response = await this.UserService.changePassword(user, newPassword);
+                    let newPass = await bcrypt_1.default.hash(req.body.newPassword, 10);
+                    let response = await userService_1.default.changePassword(user, newPass);
                     res.status(200).json(response);
                 }
             }

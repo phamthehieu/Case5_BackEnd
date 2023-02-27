@@ -36,5 +36,13 @@ class UserService {
     changePassword = async (user, newPass) => {
         return await this.userRepository.update({idUser: user.idUser}, {password:newPass})
     }
+    findUser = async (id) => {
+        let user = await this.userRepository.findOneBy({idUser: id})
+        if (!user) {
+            return null;
+        }else{
+            return user
+        }
+    }
 }
 export default new UserService()

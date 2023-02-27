@@ -32,7 +32,7 @@ class AuthService {
                             status: userCheck.status
                         }
                         const token = jwt.sign(payload, SECRET, {
-                            expiresIn: 36000
+                            expiresIn: 3600000
                         })
                         const check = {
                             token: token,
