@@ -8,7 +8,6 @@ class AuthController {
     constructor() {
         this.login = async (req, res) => {
             try {
-                console.log(req.body);
                 let user = await this.AuthService.checkUser(req.body);
                 res.status(200).json(user);
             }
