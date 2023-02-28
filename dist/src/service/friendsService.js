@@ -6,18 +6,29 @@ class FriendsService {
     constructor() {
         this.sendFriends = async (send) => {
             await this.friendsRepository.save(send);
+            return 'Succe   ss';
+        };
+        this.confirmFriends = async (id, confirm) => {
+            await this.friendsRepository.update({ idReceiver: id }, { status: confirm });
             return 'Success';
         };
-        this.confirmFriendship = async (id, confirm) => {
-            await this.friendsRepository.update({ idSender: id }, { status: confirm });
-            return 'Success';
-        };
-        this.listFriends = async (id, status) => {
+        this.listSendFriends = async (id, status) => {
             let sql = `SELECT * from friends f JOIN users u ON f.idSender = u.idUser where f.idReceiver = ${id} and f.status = '${status}'`;
             return await this.friendsRepository.query(sql);
         };
-        this.remove = async (id) => {
-            await this.friendsRepository.delete({ idSender: id.idSender, idReceiver: id.idReceiver });
+        this.listReceiveFriends = async (id, status) => {
+            let sql = `SELECT * from friends f JOIN users u ON f.idReceiver = u.idUser where f.idSender = ${id} and f.status = '${status}'`;
+            return await this.friendsRepository.query(sql);
+        };
+        this.listFriends = async (id, status) => {
+            let sql = `select * from friends f JOIN users u ON f.idSender = u.idUser where f.idReceiver = ${id} and f.status = '${status}'
+                   union
+                   select * from friends f JOIN users u ON f.idReceiver = u.idUser where f.idSender = ${id} and f.status = '${status}'`;
+            return await this.friendsRepository.query(sql);
+        };
+        this.remove = async (sender, receiver) => {
+            let sql = `delete from friends where (idReceiver = ${receiver} and idSender = ${sender}) or (idReceiver = ${sender} and idSender = ${receiver} )`;
+            await this.friendsRepository.query(sql);
             return 'Success';
         };
         this.friendsRepository = data_soure_1.AppDataSource.getRepository(friends_1.Friends);

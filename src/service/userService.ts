@@ -44,5 +44,13 @@ class UserService {
             return user
         }
     }
+    friendSuggestion = async (id) => {
+        let sql = `select *
+                   from users
+                   where idUser not in (select idSender from friends)
+                     and idUser not in (select idReceiver from friends)
+                     and idUser != ${id}`
+        return await this.userRepository.query(sql)
+    }
 }
 export default new UserService()

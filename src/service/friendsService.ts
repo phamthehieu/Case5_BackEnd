@@ -7,18 +7,29 @@ class FriendsService {
     }
     sendFriends = async (send) => {
        await this.friendsRepository.save(send)
+        return 'Succe   ss'
+    }
+    confirmFriends = async (id,confirm) => {
+        await this.friendsRepository.update({idReceiver: id},{status: confirm})
         return 'Success'
     }
-    confirmFriendship = async (id,confirm) => {
-        await this.friendsRepository.update({idSender: id},{status: confirm})
-        return 'Success'
-    }
-    listFriends = async (id, status) => {
+    listSendFriends = async (id, status) => {
         let sql = `SELECT * from friends f JOIN users u ON f.idSender = u.idUser where f.idReceiver = ${id} and f.status = '${status}'`
         return await this.friendsRepository.query(sql)
     }
-    remove = async (id) => {
-        await this.friendsRepository.delete({idSender: id.idSender, idReceiver: id.idReceiver})
+    listReceiveFriends = async (id, status) => {
+        let sql = `SELECT * from friends f JOIN users u ON f.idReceiver = u.idUser where f.idSender = ${id} and f.status = '${status}'`
+        return await this.friendsRepository.query(sql)
+    }
+    listFriends = async (id, status) => {
+        let sql = `select * from friends f JOIN users u ON f.idSender = u.idUser where f.idReceiver = ${id} and f.status = '${status}'
+                   union
+                   select * from friends f JOIN users u ON f.idReceiver = u.idUser where f.idSender = ${id} and f.status = '${status}'`
+        return await this.friendsRepository.query(sql)
+    }
+    remove = async (sender, receiver) => {
+        let sql =`delete from friends where (idReceiver = ${receiver} and idSender = ${sender}) or (idReceiver = ${sender} and idSender = ${receiver} )`
+        await this.friendsRepository.query(sql)
         return 'Success'
     }
 }

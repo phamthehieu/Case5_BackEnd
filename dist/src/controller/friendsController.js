@@ -4,6 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const friendsService_1 = __importDefault(require("../service/friendsService"));
+const userService_1 = __importDefault(require("../service/userService"));
 class AuthController {
     constructor() {
         this.sendFriends = async (req, res) => {
@@ -17,22 +18,33 @@ class AuthController {
                 res.status(500).json(e.message);
             }
         };
-        this.confirmFriendship = async (req, res) => {
+        this.confirmFriends = async (req, res) => {
             try {
                 let id = req.params.id;
                 let confirm = 'friend';
-                let user = await this.FriendsService.confirmFriendship(id, confirm);
+                let user = await this.FriendsService.confirmFriends(id, confirm);
                 res.status(200).json(user);
             }
             catch (e) {
                 res.status(500).json(e.message);
             }
         };
-        this.listConfirmFriends = async (req, res) => {
+        this.listSendFriends = async (req, res) => {
             try {
                 let id = req.params.id;
                 let status = 'confirm';
-                let list = await this.FriendsService.listFriends(id, status);
+                let list = await this.FriendsService.listSendFriends(id, status);
+                res.status(200).json(list);
+            }
+            catch (e) {
+                res.status(500).json(e.message);
+            }
+        };
+        this.listReceiveFriends = async (req, res) => {
+            try {
+                let id = req.params.id;
+                let status = 'confirm';
+                let list = await this.FriendsService.listReceiveFriends(id, status);
                 res.status(200).json(list);
             }
             catch (e) {
@@ -52,15 +64,27 @@ class AuthController {
         };
         this.remove = async (req, res) => {
             try {
-                let id = req.body;
-                let user = await this.FriendsService.remove(id);
-                res.status(200).json(user);
+                let sender = req.body.idSender;
+                let receiver = req.body.idReceiver;
+                let friend = await this.FriendsService.remove(sender, receiver);
+                res.status(200).json(friend);
+            }
+            catch (e) {
+                res.status(500).json(e.message);
+            }
+        };
+        this.friendSuggestion = async (req, res) => {
+            try {
+                let id = req.params.id;
+                let users = await this.UserService.friendSuggestion(id);
+                res.status(200).json(users);
             }
             catch (e) {
                 res.status(500).json(e.message);
             }
         };
         this.FriendsService = friendsService_1.default;
+        this.UserService = userService_1.default;
     }
 }
 exports.default = new AuthController();

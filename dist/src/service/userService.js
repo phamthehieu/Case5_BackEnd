@@ -45,6 +45,14 @@ class UserService {
                 return user;
             }
         };
+        this.friendSuggestion = async (id) => {
+            let sql = `select *
+                   from users
+                   where idUser not in (select idSender from friends)
+                     and idUser not in (select idReceiver from friends)
+                     and idUser != ${id}`;
+            return await this.userRepository.query(sql);
+        };
         this.userRepository = data_soure_1.AppDataSource.getRepository(users_1.Users);
     }
 }

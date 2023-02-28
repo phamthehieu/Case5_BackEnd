@@ -1,11 +1,14 @@
 import FriendsService from "../service/friendsService";
 import {Request, Response} from "express";
+import UserService from '../service/userService'
 
 class AuthController {
     private FriendsService
+    private UserService
 
     constructor() {
         this.FriendsService = FriendsService;
+        this.UserService = UserService;
     }
 
     sendFriends = async (req: Request, res: Response) => {
@@ -18,21 +21,31 @@ class AuthController {
             res.status(500).json(e.message);
         }
     }
-    confirmFriendship = async (req: Request, res: Response) => {
+    confirmFriends = async (req: Request, res: Response) => {
         try {
             let id = req.params.id;
             let confirm = 'friend'
-            let user = await this.FriendsService.confirmFriendship(id, confirm)
+            let user = await this.FriendsService.confirmFriends(id, confirm)
             res.status(200).json(user)
         } catch (e) {
             res.status(500).json(e.message);
         }
     }
-    listConfirmFriends = async (req: Request, res: Response) => {
+    listSendFriends = async (req: Request, res: Response) => {
         try {
             let id = req.params.id;
             let status = 'confirm'
-            let list = await this.FriendsService.listFriends(id, status)
+            let list = await this.FriendsService.listSendFriends(id, status)
+            res.status(200).json(list)
+        } catch (e) {
+            res.status(500).json(e.message);
+        }
+    }
+    listReceiveFriends = async (req: Request, res: Response) => {
+        try {
+            let id = req.params.id;
+            let status = 'confirm'
+            let list = await this.FriendsService.listReceiveFriends(id, status)
             res.status(200).json(list)
         } catch (e) {
             res.status(500).json(e.message);
@@ -50,9 +63,19 @@ class AuthController {
     }
     remove = async (req: Request, res: Response) => {
         try {
-            let id = req.body
-            let user = await this.FriendsService.remove(id)
-            res.status(200).json(user)
+            let sender = req.body.idSender;
+            let receiver = req.body.idReceiver
+            let friend = await this.FriendsService.remove(sender, receiver)
+            res.status(200).json(friend)
+        } catch (e) {
+            res.status(500).json(e.message);
+        }
+    }
+    friendSuggestion = async (req: Request, res: Response) => {
+        try {
+            let id = req.params.id;
+            let users = await this.UserService.friendSuggestion(id);
+            res.status(200).json(users)
         } catch (e) {
             res.status(500).json(e.message);
         }

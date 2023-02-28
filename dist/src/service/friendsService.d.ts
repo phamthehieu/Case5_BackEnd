@@ -2,9 +2,11 @@ declare class FriendsService {
     private friendsRepository;
     constructor();
     sendFriends: (send: any) => Promise<string>;
-    confirmFriendship: (id: any, confirm: any) => Promise<string>;
+    confirmFriends: (id: any, confirm: any) => Promise<string>;
+    listSendFriends: (id: any, status: any) => Promise<any>;
+    listReceiveFriends: (id: any, status: any) => Promise<any>;
     listFriends: (id: any, status: any) => Promise<any>;
-    remove: (id: any) => Promise<string>;
+    remove: (sender: any, receiver: any) => Promise<string>;
 }
 declare const _default: FriendsService;
 export default _default;
