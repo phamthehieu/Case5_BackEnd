@@ -22,17 +22,13 @@ __decorate([
     __metadata("design:type", String)
 ], Posts.prototype, "content", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ type: 'text' }),
+    (0, typeorm_1.Column)(),
     __metadata("design:type", String)
-], Posts.prototype, "image", void 0);
+], Posts.prototype, "imagePost", void 0);
 __decorate([
     (0, typeorm_1.Column)(),
     __metadata("design:type", Number)
 ], Posts.prototype, "idUser", void 0);
-__decorate([
-    (0, typeorm_1.Column)(),
-    __metadata("design:type", Number)
-], Posts.prototype, "idFriend", void 0);
 __decorate([
     (0, typeorm_1.Column)(),
     __metadata("design:type", String)

@@ -5,6 +5,7 @@ declare class UserController {
     editUser: (req: Request, res: Response) => Promise<void>;
     lockUser: (req: Request, res: Response) => Promise<void>;
     showListUser: (req: Request, res: Response) => Promise<void>;
+    showProfileUser: (req: Request, res: Response) => Promise<void>;
     showProfile: (req: Request, res: Response) => Promise<void>;
     changePassword: (req: Request, res: Response) => Promise<void>;
 }

@@ -4,13 +4,20 @@ const data_soure_1 = require("../data-soure");
 const posts_1 = require("../model/posts");
 class PostService {
     constructor() {
+        this.getPostsUser = async (id) => {
+            return await this.postRepository.find({ idUser: id });
+        };
         this.getAll = async () => {
-            let sql = 'select p.content,p.image,p.role,p.time, u.userName from users u join posts p on u.idUser = p.idUser';
+            let sql = 'select * from users u join posts p on u.idUser = p.idUser';
             let posts = await this.postRepository.query(sql);
             return posts;
         };
         this.save = async (post) => {
-            return this.postRepository.save(post);
+            await this.postRepository.save(post);
+            return 'success';
+        };
+        this.findByIdPost = async (id) => {
+            return await this.postRepository.findOneBy({ idPost: id });
         };
         this.update = async (id, newPost) => {
             let post = await this.postRepository.findOneBy({ idPost: id });

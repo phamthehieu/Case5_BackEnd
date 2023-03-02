@@ -13,4 +13,5 @@ exports.userRouter.put('/:id', userController_1.default.editUser);
 exports.userRouter.put('/lock/:id', checkRole_1.checkRole, userController_1.default.lockUser);
 exports.userRouter.put('/password/:id', userController_1.default.changePassword);
 exports.userRouter.get('/profile/:id', userController_1.default.showProfile);
+exports.userRouter.get('/profileUser', userController_1.default.showProfileUser);
 //# sourceMappingURL=userRouter.js.map

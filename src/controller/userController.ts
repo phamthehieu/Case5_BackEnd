@@ -38,7 +38,14 @@ class UserController {
             res.status(500).json(e.message);
         }
     }
-
+    showProfileUser = async (req: Request, res: Response) => {
+        try {
+            let user = await this.UserService.getProfileUser(req.query.idUser, req.query.id)
+            res.status(200).json({user})
+        } catch (e) {
+            res.status(500).json(e.message);
+        }
+    }
     showProfile = async (req: Request, res: Response) => {
         try {
             let id = req.params.id;

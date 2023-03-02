@@ -23,9 +23,7 @@ class AuthController {
     }
     confirmFriends = async (req: Request, res: Response) => {
         try {
-            let id = req.params.id;
-            let confirm = 'friend'
-            let user = await this.FriendsService.confirmFriends(id, confirm)
+            let user = await this.FriendsService.confirmFriends(req.body.idSender, req.body.idReceiver)
             res.status(200).json(user)
         } catch (e) {
             res.status(500).json(e.message);
@@ -63,9 +61,7 @@ class AuthController {
     }
     remove = async (req: Request, res: Response) => {
         try {
-            let sender = req.body.idSender;
-            let receiver = req.body.idReceiver
-            let friend = await this.FriendsService.remove(sender, receiver)
+            let friend = await this.FriendsService.remove(req.query.idSender, req.query.idReceiver)
             res.status(200).json(friend)
         } catch (e) {
             res.status(500).json(e.message);

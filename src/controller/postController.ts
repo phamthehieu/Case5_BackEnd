@@ -7,6 +7,22 @@ class PostController {
         this.postService = postService;
 
     }
+    getPostUser = async (req: Request, res: Response) => {
+        try{
+            let posts = await postService.getPostsUser(req.params.id);
+            res.status(200).json(posts)
+        } catch (e) {
+            res.status(500).json(e.message)
+        }
+    }
+    findByIdPost = async (req: Request, res: Response) => {
+        try{
+            let posts = await postService.findByIdPost(req.params.id);
+            res.status(200).json(posts)
+        } catch (e) {
+            res.status(500).json(e.message)
+        }
+    }
     getAll = async (req: Request, res: Response) => {
         try{
             let posts = await postService.getAll();
@@ -15,51 +31,26 @@ class PostController {
             res.status(500).json(e.message)
         }
     }
-    findById = async (req: Request, res: Response) => {
+    create = async (req: Request, res: Response) => {
         try{
-            let idPost = req.params.idPost
-            let post = await this.postService.findById(idPost);
-            res.status(200).json(post)
+            let post = req.body;
+            await this.postService.save(post);
+            res.status(200).json('Success');
         } catch (e) {
             res.status(500).json(e.message)
         }
     }
-    create = async (req: Request, res: Response) => {
-        let a = req.body;
-
-        let post = {
-            content : a.content,
-            image : a.image,
-            idUser: a.idUser,
-            idFriend: a.idFriend,
-            role: a.role,
-            time: a.time
-        };
-        await postService.save(post);
-
-        res.status(200).json('Success');
-    }
     update = async (req: Request, res: Response) => {
-        let idPost = req.params.idPost;
+        let id = req.params.id;
         let newPost = req.body;
-        await this.postService.update(idPost, newPost);
+        await this.postService.update(id, newPost);
         res.status(200).json('Success!')
     }
     remove = async (req: Request, res: Response) => {
-        let idPost = req.params.idPost;
-        await this.postService.remove(idPost);
+        let id = req.params.id;
+        await this.postService.remove(id);
         res.status(200).json('Success!')
 
     }
-    search = async (req: Request, res: Response) => {
-        let search = req.query.userName;
-        let blogs = await postService.findByName(search);
-        res.status(200).json(blogs)
-    }
-
-
-
-
-
 }
 export default new PostController();

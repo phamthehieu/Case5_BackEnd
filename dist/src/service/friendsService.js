@@ -6,10 +6,11 @@ class FriendsService {
     constructor() {
         this.sendFriends = async (send) => {
             await this.friendsRepository.save(send);
-            return 'Succe   ss';
+            return 'Success';
         };
-        this.confirmFriends = async (id, confirm) => {
-            await this.friendsRepository.update({ idReceiver: id }, { status: confirm });
+        this.confirmFriends = async (idUser, id) => {
+            let sql = `UPDATE friends SET status = 'friend' where (idReceiver = ${idUser} and idSender = ${id}) or (idReceiver = ${id} and idSender = ${idUser})`;
+            await this.friendsRepository.query(sql);
             return 'Success';
         };
         this.listSendFriends = async (id, status) => {

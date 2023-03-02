@@ -6,12 +6,10 @@ export class Posts {
     idPost: number;
     @Column({type: 'text'})
     content: string;
-    @Column({type: 'text'})
-    image: string;
+    @Column()
+    imagePost: string;
     @Column()
     idUser: number;
-    @Column()
-    idFriend: number;
     @Column()
     role: string;
     @Column()

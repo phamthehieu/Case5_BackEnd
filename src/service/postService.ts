@@ -6,17 +6,22 @@ class PostService {
          this.postRepository = AppDataSource.getRepository(Posts)
 
     }
+    getPostsUser = async (id) => {
+         return await this.postRepository.find({idUser: id})
+    }
     getAll = async () => {
-        let sql = 'select p.content,p.image,p.role,p.time, u.userName from users u join posts p on u.idUser = p.idUser'
+        let sql = 'select * from users u join posts p on u.idUser = p.idUser'
         let posts = await this.postRepository.query(sql)
-
         return posts
 
     }
     save = async(post) => {
-         return this.postRepository.save(post)
+         await this.postRepository.save(post)
+        return 'success'
 
-
+    }
+    findByIdPost = async (id) => {
+        return await this.postRepository.findOneBy({idPost: id});
     }
     update = async (id, newPost)=>{
         let post = await this.postRepository.findOneBy({idPost: id});
